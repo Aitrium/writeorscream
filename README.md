@@ -26,7 +26,7 @@ Welcome to the "Write Or Scream" project! This is a simple HTML project that is 
 2. Start writing in the provided text area.
 3. Set your word target and time limit using the input fields.
 4. Click the "Start" button to begin the challenge.
-5. If you meet your word target within the time limit, you'll hear a cheering sound. Otherwise, get ready for a surprise scream!
+5. If you meet your word target within the time limit, you'll hear a cheering sound.
 
 ## Audio Credits
 
