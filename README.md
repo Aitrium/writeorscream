@@ -1,6 +1,6 @@
 # Write Or Scream
 
-Welcome to the "Write Or Scream" project! This is a simple HTML project that provides a writing environment with a twist. Users have a word target to reach within a specified time limit. Failure to meet the target results in a surprising twist, making the experience both challenging and entertaining.
+Welcome to the "Write Or Scream" project! This is a simple HTML project that is inspired by the legendary Write Or Die, providing a writing environment with a twist. Users have a word target to reach within a specified time limit. Failure to meet the target results in a surprising twist, making the experience both challenging and entertaining.
 
 ## Getting Started
 
