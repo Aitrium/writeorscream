@@ -17,8 +17,8 @@ Welcome to the "Write Or Scream" project! This is a simple HTML project that is 
 - **Word Count Tracking:** The application tracks the number of words you've written in real-time.
 - **Word Target Setting:** You can set a specific word target that you aim to reach before the time limit expires.
 - **Time Limit:** The application includes a timer that counts down from the specified time limit.
-- **Interactive Timer Display:** The timer dynamically updates and changes color when the user is inactive for too long.
-- **Surprise Twist:** If you fail to meet your word target within the time limit, a scream sound effect is triggered, making the experience more engaging.
+- **Interactive Timer Display:** The timer dynamically updates andthe screen changes color when the user is inactive for too long.
+- **Surprise Twist:** If you stop writing, a scream sound effect is triggered!
 
 ## Usage
 
