@@ -7,7 +7,7 @@ Welcome to the "Write Or Scream" project! This is a simple HTML project that is 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/write-or-scream.git
+    git clone https://github.com/Aitrium/writeorscream
     ```
 
 2. Open the `index.html` file in your web browser.
