@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Write Or Scream</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #writing-area {
+            width: 80%;
+            height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #word-count, #timer {
+            font-size: 18px;
+            margin: 10px;
+        }
+        #word-target, #time-limit {
+            font-size: 16px;
+            margin: 5px;
+            padding: 5px;
+        }
+        #word-count {
+            font-weight: bold;
+        }
+        .input-container {
+            margin: 20px;
+        }
+        .button {
+            background-color: #0074D9;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Write Or Scream</h1>
+    <textarea id="writing-area" placeholder="Start writing..."></textarea>
+    <div id="word-count">Word Count: 0</div>
+    <div class="input-container">
+        <label for "word-target">Word Target:</label>
+        <input type="number" id="word-target" min="1" value="500">
+    </div>
+    <div class="input-container">
+        <label for "time-limit">Time Limit (in minutes):</label>
+        <input type="number" id="time-limit" min="1" value="15">
+    </div>
+    <div id="timer">Time Left: 15:00</div>
+    <button class="button" id="start-button">Start</button>
+    
+    <audio id="scream-audio" src="https://www.partnersinrhyme.com/files/sounds1/WAV/human/screamf1.wav"></audio>
+    <audio id="cheering-audio" src="https://www.myinstants.com/media/sounds/kids_cheering.mp3"></audio>
+    <audio id="victory-audio" src="http://soundfxcenter.com/video-games/mortal-kombat-3-trilogy/8d82b5_Mortal_Kombat_3_Flawless_Victory_Sound_Effect.mp3"></audio>
+
+    <script>
+        let inactivityTimer;
+        let countdownTimer;
+        let isScreenRed = false;
+        let wordCount = 0;
+        let timeLimit = 15; // Default time limit is 15 minutes
+        let timeLeft = timeLimit * 60; // Convert minutes to seconds
+        let isStarted = false;
+        let targetReached = false;
+        let screamPlayed = false;
+        const writingArea = document.getElementById('writing-area');
+        const wordCountDisplay = document.getElementById('word-count');
+        const wordTargetInput = document.getElementById('word-target');
+        const timeLimitInput = document.getElementById('time-limit');
+        const timerDisplay = document.getElementById('timer');
+        const startButton = document.getElementById('start-button');
+        const screamAudio = document.getElementById('scream-audio');
+        const cheeringAudio = document.getElementById('cheering-audio');
+        const victoryAudio = document.getElementById('victory-audio');
+
+        function playScream() {
+            screamAudio.play();
+            screamPlayed = true;
+        }
+
+        function stopScream() {
+            screamAudio.pause();
+            screamAudio.currentTime = 0;
+        }
+
+        function playCheering() {
+            cheeringAudio.play();
+        }
+
+        function stopCheering() {
+            cheeringAudio.pause();
+            cheeringAudio.currentTime = 0;
+        }
+
+        function playVictory() {
+            victoryAudio.play();
+        }
+
+        function stopVictory() {
+            victoryAudio.pause();
+            victoryAudio.currentTime = 0;
+        }
+
+        function turnScreenRed() {
+            document.body.style.backgroundColor = 'red';
+            playScream();
+            isScreenRed = true;
+        }
+
+        function resetScreen() {
+            document.body.style.backgroundColor = 'white';
+            isScreenRed = false;
+            stopScream();
+        }
+
+        function startInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            if (isStarted && !targetReached) {
+                inactivityTimer = setTimeout(turnScreenRed, 10000); // 10 seconds
+            }
+        }
+
+        function startCountdownTimer() {
+            clearInterval(countdownTimer);
+            timeLeft = timeLimit * 60;
+            updateTimerDisplay();
+            countdownTimer = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft === 0) {
+                clearInterval(countdownTimer);
+                alert('Time limit reached!');
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function updateWordCount() {
+            const text = writingArea.value;
+            const words = text.trim().split(/\s+/);
+            wordCount = words.length;
+            wordCountDisplay.textContent = `Word Count: ${wordCount}`;
+        }
+
+        function checkWordTarget() {
+            const target = parseInt(wordTargetInput.value, 10);
+            if (wordCount >= target && !targetReached) {
+                alert(`Word target of ${target} reached!`);
+                targetReached = true;
+                if (!screamPlayed) {
+                    playVictory();
+                } else {
+                    playCheering(); // Stop cheering if it was playing
+                }
+            }
+        }
+
+        writingArea.addEventListener('input', function() {
+            startInactivityTimer();
+            resetScreen();
+            updateWordCount();
+            checkWordTarget();
+        });
+
+        wordTargetInput.addEventListener('input', checkWordTarget);
+
+        timeLimitInput.addEventListener('input', function() {
+            timeLimit = parseInt(timeLimitInput.value, 10);
+            startInactivityTimer();
+            startCountdownTimer();
+        });
+
+        startButton.addEventListener('click', function() {
+            isStarted = true;
+            startInactivityTimer();
+            startCountdownTimer();
+        });
+    </script>
+</body>
+</html>
